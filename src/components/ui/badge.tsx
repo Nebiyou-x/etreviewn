@@ -11,9 +11,9 @@ const Badge = React.forwardRef<HTMLSpanElement, BadgeProps>(
       "inline-block px-4 py-1 text-xs font-bold rounded-full transition-all duration-200 shadow-sm select-none";
     let variantClass = "";
     if (variant === "primary") {
-      variantClass = "bg-gradient-to-r from-orange-500 to-yellow-400 text-black";
+      variantClass = "bg-accent text-secondary";
     } else {
-      variantClass = "bg-white/10 text-white border border-white/20";
+      variantClass = "bg-primary text-secondary border border-accent";
     }
     return (
       <span ref={ref} className={cn(base, variantClass, className)} {...props} />
