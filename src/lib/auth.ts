@@ -14,12 +14,14 @@ export const auth = betterAuth({
     minPasswordLength: 6,
   },
 
-  // ✅ Use inline typing instead of missing LogoutContext
+  // ✅ Fixed logout handler with correct cookie name
   async logout(context: { res: import("next/server").NextResponse }) {
-    context.res.cookies.set("better-auth.session-token", "", {
+    context.res.cookies.set("__Secure-better-auth.session-token", "", {
       path: "/",
       httpOnly: true,
-      expires: new Date(0),
+      secure: true, // required to match original cookie
+      sameSite: "lax", // match the SameSite setting
+      expires: new Date(0), // immediately expire
     });
 
     return {
