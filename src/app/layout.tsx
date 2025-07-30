@@ -1,9 +1,9 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google"; // Using Inter font
+import { Inter } from "next/font/google";
 import "./globals.css";
 import { Toaster } from 'sonner';
 
-const inter = Inter({ subsets: ["latin"] }); // Initialize Inter
+const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: "EthioFlix",
@@ -13,15 +13,8 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
-      <body className={`${inter.className} antialiased text-gray-200`}>
-        <div className="min-h-screen w-full relative bg-black">
-          {/* Copper Forge Background with Top Glow */}
-          <div
-            className="absolute inset-0 z-0 pointer-events-none" // pointer-events-none
-            style={{
-              background: "radial-gradient(ellipse 80% 60% at 50% 0%, rgba(249, 115, 22, 0.25), transparent 70%), #000000",
-            }}
-          />
+      <body className={`${inter.className} antialiased text-secondary`}>
+        <div className="min-h-screen w-full relative bg-primary">
           {/* Main Content Layer */}
           <main className="relative z-10">
             {children}
