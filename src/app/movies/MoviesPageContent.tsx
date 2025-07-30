@@ -67,11 +67,13 @@ export default function MoviesPageContent() {
             </Link>
           </div>
           
-          {/* Desktop Navigation */}
-          <div className="hidden md:flex items-center space-x-6">
-            <Link href="/" className="text-secondary hover:text-accent transition font-medium">Home</Link>
-            <Link href="/movies" className="text-accent font-bold">Movies</Link>
-            <Link href="/stories" className="text-secondary hover:text-accent transition font-medium">News</Link>
+          {/* Centered Navigation */}
+          <div className="hidden md:flex items-center justify-center flex-1">
+            <div className="flex items-center space-x-8">
+              <Link href="/" className="text-secondary hover:text-accent transition font-medium">Home</Link>
+              <Link href="/movies" className="text-accent font-bold">Movies</Link>
+              <Link href="/stories" className="text-secondary hover:text-accent transition font-medium">News</Link>
+            </div>
           </div>
 
           {/* Desktop Auth Links */}

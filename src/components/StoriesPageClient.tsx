@@ -2,13 +2,14 @@
 import React, { useState } from "react";
 import { Card, CardHeader, CardContent, CardFooter } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { BookOpen, User, CalendarDays, Film, Plus, Trash2 } from "lucide-react";
+import { BookOpen, User, CalendarDays, Film, Plus, Trash2, Menu, X } from "lucide-react";
 import Link from "next/link";
 import { Badge } from "@/components/ui/badge";
 
 export default function StoriesPageClient({ initialNews, isAdmin }: { initialNews: any[]; isAdmin: boolean }) {
   const [news, setNews] = useState(initialNews);
   const [deletingId, setDeletingId] = useState<string | null>(null);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   async function handleDelete(id: string) {
     if (!window.confirm("Are you sure you want to delete this news item?")) return;
@@ -37,11 +38,23 @@ export default function StoriesPageClient({ initialNews, isAdmin }: { initialNew
               Ethio<span className="text-accent">Flix</span>
             </Link>
           </div>
-          <div className="hidden md:flex items-center space-x-6">
-            <Link href="/" className="text-secondary hover:text-accent transition font-medium">Home</Link>
-            <Link href="/movies" className="text-secondary hover:text-accent transition font-medium">Movies</Link>
-            <Link href="/stories" className="text-accent font-bold">News</Link>
+          
+          {/* Centered Navigation */}
+          <div className="hidden md:flex items-center justify-center flex-1">
+            <div className="flex items-center space-x-8">
+              <Link href="/" className="text-secondary hover:text-accent transition font-medium">Home</Link>
+              <Link href="/movies" className="text-secondary hover:text-accent transition font-medium">Movies</Link>
+              <Link href="/stories" className="text-accent font-bold">News</Link>
+            </div>
           </div>
+
+          {/* Mobile Menu Button */}
+          <button
+            className="md:hidden p-2 text-secondary hover:text-accent transition-colors"
+            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+          >
+            {mobileMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
+          </button>
         </div>
       </nav>
       <div className="max-w-7xl mx-auto px-4 py-12">
@@ -70,14 +83,14 @@ export default function StoriesPageClient({ initialNews, isAdmin }: { initialNew
           {news.map((story: any) => (
             <Card
               key={story.id}
-              className="bg-primary border border-accent shadow-xl hover:border-accent transition-colors group rounded-2xl overflow-hidden"
+              className="bg-primary border border-accent shadow-xl hover:border-accent transition-colors group rounded-2xl overflow-hidden flex flex-col h-full"
             >
               <CardHeader>
                 <h2 className="text-2xl font-bold text-secondary group-hover:text-accent transition-colors mb-2">
                   {story.title}
                 </h2>
               </CardHeader>
-              <CardContent className="space-y-4">
+              <CardContent className="space-y-4 flex-1">
                 {story.imageUrl && (
                   <img src={story.imageUrl} alt={story.title} className="w-full h-44 object-cover rounded-xl mb-2 shadow-md" />
                 )}
@@ -100,8 +113,8 @@ export default function StoriesPageClient({ initialNews, isAdmin }: { initialNew
                 </div>
                 <p className="text-secondary leading-relaxed line-clamp-3">{story.content.slice(0, 120)}...</p>
               </CardContent>
-              <CardFooter className="flex justify-between border-t border-accent pt-4 gap-2 bg-primary">
-                <Link href={`/stories/${story.id}`} className="w-full ml-3">
+              <CardFooter className="flex justify-between border-t border-accent pt-4 gap-2 bg-primary mt-auto">
+                <Link href={`/stories/${story.id}`} className="w-full">
                   <Button className="w-full bg-accent text-secondary font-bold shadow-lg hover:bg-primary hover:text-accent transition-all duration-200">
                     <BookOpen className="h-4 w-4 mr-2" />
                     Read Full Story
@@ -110,7 +123,7 @@ export default function StoriesPageClient({ initialNews, isAdmin }: { initialNew
                 {isAdmin && (
                   <Button
                     variant="secondary"
-                    className="ml-2 flex items-center"
+                    className="flex items-center"
                     onClick={() => handleDelete(story.id)}
                     disabled={deletingId === story.id}
                   >

@@ -102,20 +102,22 @@ export default function Home() {
               </Link>
             </div>
             
-            {/* Desktop Navigation */}
-            <div className="hidden md:flex items-center space-x-6">
-              <Link href="/" className="flex items-center space-x-1 text-secondary hover:text-accent transition-colors">
-                <HomeIcon className="h-4 w-4" />
-                <span>Home</span>
-              </Link>
-              <Link href="/movies" className="flex items-center space-x-1 text-secondary hover:text-accent transition-colors">
-                <Film className="h-4 w-4" />
-                <span>Movies</span>
-              </Link>
-              <Link href="/stories" className="flex items-center space-x-1 text-secondary hover:text-accent transition-colors">
-                <BookOpen className="h-4 w-4" />
-                <span>News</span>
-              </Link>
+            {/* Centered Navigation */}
+            <div className="hidden md:flex items-center justify-center flex-1">
+              <div className="flex items-center space-x-8">
+                <Link href="/" className="flex items-center space-x-1 text-accent font-bold">
+                  <HomeIcon className="h-4 w-4" />
+                  <span>Home</span>
+                </Link>
+                <Link href="/movies" className="flex items-center space-x-1 text-secondary hover:text-accent transition-colors">
+                  <Film className="h-4 w-4" />
+                  <span>Movies</span>
+                </Link>
+                <Link href="/stories" className="flex items-center space-x-1 text-secondary hover:text-accent transition-colors">
+                  <BookOpen className="h-4 w-4" />
+                  <span>News</span>
+                </Link>
+              </div>
             </div>
 
             {/* Mobile Menu Button */}
