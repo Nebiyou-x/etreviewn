@@ -40,12 +40,11 @@ async function MovieDetailsPage({ params }: { params: { id: string } }) {
   const ratingCount = ratingReviews.length;
 
   return (
-    <div className="min-h-screen w-full bg-gradient-to-br from-orange-900/80 via-zinc-900/90 to-black/95 flex items-center justify-center py-8 px-2">
-      <div className="relative w-full max-w-4xl rounded-3xl shadow-2xl bg-white/10 backdrop-blur-lg border border-white/20 overflow-hidden">
-        <div className="absolute inset-0 pointer-events-none bg-gradient-to-br from-orange-400/10 via-transparent to-black/30 z-0" />
-        <div className="relative z-10 flex flex-col md:flex-row gap-10 p-6 md:p-10">
-          <div className="w-full md:w-1/3 flex-shrink-0 flex items-center justify-center">
-            <div className="aspect-[2/3] w-48 md:w-56 rounded-2xl overflow-hidden shadow-xl border-2 border-orange-400/30 bg-black/40 flex items-center justify-center">
+    <div className="min-h-screen w-full bg-primary flex items-center justify-center py-4 sm:py-8 px-2">
+      <div className="relative w-full max-w-4xl rounded-3xl shadow-2xl bg-primary border border-accent overflow-hidden">
+        <div className="relative z-10 flex flex-col lg:flex-row gap-6 sm:gap-10 p-4 sm:p-6 md:p-10">
+          <div className="w-full lg:w-1/3 flex-shrink-0 flex items-center justify-center">
+            <div className="aspect-[2/3] w-48 md:w-56 rounded-2xl overflow-hidden shadow-xl border-2 border-accent bg-primary flex items-center justify-center">
               {movie.imageUrl ? (
                 <img
                   src={movie.imageUrl}
@@ -53,8 +52,8 @@ async function MovieDetailsPage({ params }: { params: { id: string } }) {
                   className="object-cover w-full h-full transition-transform duration-300 hover:scale-105"
                 />
               ) : (
-                <div className="w-full h-full flex items-center justify-center bg-zinc-900">
-                  <Film className="h-20 w-20 text-zinc-700" />
+                <div className="w-full h-full flex items-center justify-center bg-primary">
+                  <Film className="h-16 w-16 sm:h-20 sm:w-20 text-accent" />
                 </div>
               )}
             </div>
@@ -62,37 +61,37 @@ async function MovieDetailsPage({ params }: { params: { id: string } }) {
 
           <div className="flex-1 flex flex-col justify-between">
             <div>
-              <h1 className="text-4xl md:text-5xl font-extrabold mb-3 text-orange-400 drop-shadow-lg">
+              <h1 className="text-3xl sm:text-4xl md:text-5xl font-extrabold mb-3 text-accent drop-shadow-lg">
                 {movie.title}
               </h1>
-              <div className="flex flex-wrap items-center gap-4 mb-6 text-zinc-200/80 text-lg">
+              <div className="flex flex-wrap items-center gap-3 sm:gap-4 mb-4 sm:mb-6 text-secondary/80 text-base sm:text-lg">
                 <span className="flex items-center gap-1">
-                  <Calendar className="h-5 w-5 text-orange-400" />
+                  <Calendar className="h-4 w-4 sm:h-5 sm:w-5 text-accent" />
                   {movie.releaseYear || "N/A"}
                 </span>
                 {avgRating && (
                   <span className="flex items-center gap-1">
-                    <Star className="h-5 w-5 text-yellow-400" />
+                    <Star className="h-4 w-4 sm:h-5 sm:w-5 text-accent" />
                     <span className="font-semibold">{avgRating.toFixed(1)}</span>
-                    <span className="text-zinc-400 text-base">
+                    <span className="text-secondary/60 text-sm sm:text-base">
                       ({ratingCount} {ratingCount === 1 ? "rating" : "ratings"})
                     </span>
                   </span>
                 )}
                 {movie.director && (
                   <span className="flex items-center gap-1">
-                    <User className="h-5 w-5 text-orange-400" />
+                    <User className="h-4 w-4 sm:h-5 sm:w-5 text-accent" />
                     {movie.director}
                   </span>
                 )}
               </div>
 
               {movie.genres && Array.isArray(movie.genres) && movie.genres.length > 0 && (
-                <div className="flex flex-wrap gap-2 mb-6">
+                <div className="flex flex-wrap gap-2 mb-4 sm:mb-6">
                   {movie.genres.map((genre) => (
                     <Badge
                       key={genre.id}
-                      className="bg-orange-500/20 text-orange-200 border border-orange-400/30 px-3 py-1 rounded-full text-sm font-medium"
+                      className="bg-accent/20 text-accent border border-accent/30 px-2 sm:px-3 py-1 rounded-full text-xs sm:text-sm font-medium"
                     >
                       {genre.name}
                     </Badge>
@@ -101,21 +100,21 @@ async function MovieDetailsPage({ params }: { params: { id: string } }) {
               )}
             </div>
 
-            <div className="flex gap-4 mb-8">
+            <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 mb-6 sm:mb-8">
               {/* Only show the rating button at the top */}
               <QuickStarRating movieId={movie.id} />
               {movie.watchUrl && (
                 <a href={movie.watchUrl} target="_blank" rel="noopener noreferrer">
-                  <Button className="bg-gradient-to-r from-orange-500 via-pink-500 to-yellow-400 text-white font-bold shadow-lg hover:from-orange-600 hover:to-yellow-500 transition-all duration-200 px-6 py-2 rounded-xl">
+                  <Button className="bg-accent text-secondary font-bold shadow-lg hover:bg-primary hover:text-accent transition-all duration-200 px-4 sm:px-6 py-2 rounded-xl">
                     Watch Now
                   </Button>
                 </a>
               )}
             </div>
 
-            <div className="mb-6">
-              <h3 className="text-xl font-semibold mb-2 text-orange-300 tracking-wide">Synopsis</h3>
-              <p className="text-zinc-100/90 leading-relaxed text-base md:text-lg">
+            <div className="mb-4 sm:mb-6">
+              <h3 className="text-lg sm:text-xl font-semibold mb-2 text-accent tracking-wide">Synopsis</h3>
+              <p className="text-secondary/90 leading-relaxed text-sm sm:text-base md:text-lg">
                 {movie.description}
               </p>
             </div>
@@ -126,7 +125,7 @@ async function MovieDetailsPage({ params }: { params: { id: string } }) {
           <Link href="/movies">
             <Button
               variant="outline"
-              className="text-orange-400 border-orange-400/40 bg-black/40 hover:bg-orange-400/10 shadow-md"
+              className="text-accent border-accent bg-primary hover:bg-accent hover:text-secondary shadow-md"
             >
               <ArrowLeft className="h-4 w-4 mr-2" />
               Back
@@ -134,9 +133,9 @@ async function MovieDetailsPage({ params }: { params: { id: string } }) {
           </Link>
         </div>
 
-        <div className="relative z-10 mt-8 px-4 pb-8">
-          <div className="max-w-3xl mx-auto rounded-2xl bg-white/10 backdrop-blur-md border border-white/20 shadow-lg p-6">
-            <h2 className="text-2xl font-bold mb-4 text-orange-300">Reviews</h2>
+        <div className="relative z-10 mt-6 sm:mt-8 px-4 pb-6 sm:pb-8">
+          <div className="max-w-3xl mx-auto rounded-2xl bg-primary border border-accent shadow-lg p-4 sm:p-6">
+            <h2 className="text-xl sm:text-2xl font-bold mb-4 text-accent">Reviews</h2>
             {/* Only comments and review form below, no stars or average rating */}
             <PaginatedReviews movieId={movie.id} />
           </div>
