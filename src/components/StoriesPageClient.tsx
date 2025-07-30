@@ -73,11 +73,7 @@ export default function StoriesPageClient({ initialNews, isAdmin }: { initialNew
               </Link>
             )}
           </div>
-          <div className="flex space-x-3 w-full md:w-auto">
-            <Button variant="secondary" className="text-accent border-accent hover:bg-accent/10 shadow-md">
-              Filter
-            </Button>
-          </div>
+         
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {news.map((story: any) => (
