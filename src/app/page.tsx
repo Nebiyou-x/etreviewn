@@ -230,17 +230,18 @@ export default function Home() {
 {/* Main Content */}
 <section className="container mx-auto px-4 py-8">
   <Tabs defaultValue="top-rated" className="w-full">
-    <TabsList className="grid grid-cols-1 w-full bg-primary border border-accent rounded-xl mb-6">
-      <TabsTrigger
-        value="top-rated"
-        className="data-[state=active]:bg-accent data-[state=active]:text-secondary
-                   text-secondary font-semibold flex items-center justify-center 
-                   gap-2 py-3 px-4 rounded-xl transition-colors"
-      >
-        <Star className="h-5 w-5 text-accent data-[state=active]:text-secondary transition-colors" />
-        <span>Top Rated</span>
-      </TabsTrigger>
-    </TabsList>
+  <TabsList className="w-full bg-primary border border-accent rounded-2xl overflow-hidden mb-6 flex">
+  <TabsTrigger
+    value="top-rated"
+    className="w-full text-secondary font-semibold py-4 px-6 text-center data-[state=active]:bg-accent data-[state=active]:text-secondary transition-colors"
+  >
+    <div className="flex items-center justify-center gap-2">
+      <Star className="h-5 w-5 text-accent data-[state=active]:text-secondary transition-colors" />
+      <span>Top Rated</span>
+    </div>
+  </TabsTrigger>
+</TabsList>
+
 
     {/* Top Rated Tab */}
     <TabsContent value="top-rated">
