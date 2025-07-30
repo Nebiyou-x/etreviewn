@@ -16,7 +16,7 @@ export const auth = betterAuth({
 
   // ✅ Fixed logout handler with correct cookie name
   async logout(context: { res: import("next/server").NextResponse }) {
-    context.res.cookies.set("__Secure-better-auth.session-token", "", {
+    context.res.cookies.set("__Secure-better-auth.session_token", "", {
       path: "/",
       httpOnly: true,
       secure: true, // required to match original cookie
