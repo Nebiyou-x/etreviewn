@@ -2,7 +2,7 @@
 import { NextResponse } from "next/server";
 
 export async function GET() {
-  const response = NextResponse.redirect("/auth/login");
+  const response = NextResponse.json({ ok: true });
 
   response.cookies.set("__Secure-better-auth.session_token", "", {
     path: "/",
