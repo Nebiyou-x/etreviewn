@@ -2,19 +2,19 @@
 
 import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
-import { ArrowLeftIcon } from "lucide-react";
-import Link from "next/link";
 import { ReturnButton } from "@/components/return-button";
+import Link from "next/link";
 
-export default function Page() {
+export default function LogoutPage() {
   const [done, setDone] = useState(false);
 
   useEffect(() => {
-    // Corrected logout endpoint for better-auth
-    fetch("/auth/logout", {
-      method: "POST",
-      credentials: "include", // important for cookie clearing
-    }).then(() => setDone(true));
+    fetch("/api/manual-logout")
+      .then(() => setDone(true))
+      .catch((err) => {
+        console.error("Logout failed:", err);
+        setDone(true); // still allow fallback
+      });
   }, []);
 
   return (
@@ -23,6 +23,7 @@ export default function Page() {
         <ReturnButton href="/" label="Home" />
         <h1 className="text-3xl font-bold">Logout</h1>
       </div>
+
       {done ? (
         <div className="space-y-4">
           <p className="text-green-500 text-lg">You have been logged out.</p>
