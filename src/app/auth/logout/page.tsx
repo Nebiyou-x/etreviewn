@@ -1,4 +1,5 @@
 "use client";
+
 import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { ArrowLeftIcon } from "lucide-react";
@@ -9,7 +10,11 @@ export default function Page() {
   const [done, setDone] = useState(false);
 
   useEffect(() => {
-    fetch("/api/auth/signout", { method: "POST", credentials: "include" }).then(() => setDone(true));
+    // Corrected logout endpoint for better-auth
+    fetch("/auth/logout", {
+      method: "POST",
+      credentials: "include", // important for cookie clearing
+    }).then(() => setDone(true));
   }, []);
 
   return (
@@ -33,4 +38,4 @@ export default function Page() {
       )}
     </div>
   );
-} 
+}
