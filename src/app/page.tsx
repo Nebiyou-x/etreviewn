@@ -225,15 +225,15 @@ export default function Home() {
               </CardContent>
             </Card>
           </div>
-        </section>
+          </section>
 
-        {/* Main Content */}
-        <section className="container mx-auto px-4 py-8">
+{/* Main Content */}
+<section className="container mx-auto px-4 py-8">
   <Tabs defaultValue="top-rated" className="w-full">
-    <TabsList className="grid w-full grid-cols-1 bg-primary border border-accent rounded-xl mb-8">
+    <TabsList className="grid grid-cols-1 w-full bg-primary border border-accent rounded-xl mb-6">
       <TabsTrigger
         value="top-rated"
-        className="data-[state=active]:bg-accent data-[state=active]:text-secondary 
+        className="data-[state=active]:bg-accent data-[state=active]:text-secondary
                    text-secondary font-semibold flex items-center justify-center 
                    gap-2 py-3 px-4 rounded-xl transition-colors"
       >
@@ -242,55 +242,69 @@ export default function Home() {
       </TabsTrigger>
     </TabsList>
 
-            {/* Top Rated Tab */}
-            <TabsContent value="top-rated">
-              {loadingTopList ? (
-                <div className="text-secondary text-center py-8">Loading...</div>
-              ) : topRatedList && topRatedList.length > 0 ? (
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 mt-6">
-                  {topRatedList.map((movie: any) => (
-                    <Card key={movie.id} className="bg-primary border-accent hover:border-accent transition-colors flex flex-col h-full">
-                      <CardHeader>
-                        <div className="aspect-[2/3] bg-primary rounded-md overflow-hidden relative">
-                          <img
-                            src={movie.imageUrl || "/placeholder.jpg"}
-                            alt={movie.title}
-                            className="object-cover w-full h-full transition-transform duration-200 hover:scale-105"
-                          />
-                        </div>
-                      </CardHeader>
-                      <CardContent className="p-3 sm:p-4 flex-1 flex flex-col">
-                        <CardTitle className="text-base sm:text-lg text-secondary mb-1 line-clamp-2">{movie.title}</CardTitle>
-                        <CardDescription className="text-secondary mb-2">
-                          {movie.releaseYear} • {movie.director}
-                        </CardDescription>
-                        <div className="flex flex-wrap gap-1 mb-2">
-                          {movie.genres && movie.genres.map((genre: any) => (
-                            <Badge key={genre.id || genre.name} variant="primary" className="text-xs bg-accent/20 text-accent border-accent/30">
-                              {genre.name}
-                            </Badge>
-                          ))}
-                        </div>
-                        <div className="flex items-center mb-4">
-                          <Star className="h-4 w-4 text-accent fill-accent mr-1" />
-                          <span className="text-accent font-bold text-lg">{movie.avgRating ? movie.avgRating.toFixed(1) : "N/A"}</span>
-                        </div>
-                        <div className="mt-auto" />
-                      </CardContent>
-                      <CardFooter className="flex items-center p-3 sm:p-4 mt-auto">
-                        <Button variant="primary" className="w-full">
-                          Details
-                        </Button>
-                      </CardFooter>
-                    </Card>
+    {/* Top Rated Tab */}
+    <TabsContent value="top-rated">
+      {loadingTopList ? (
+        <div className="text-secondary text-center py-8">Loading...</div>
+      ) : topRatedList && topRatedList.length > 0 ? (
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+          {topRatedList.map((movie: any) => (
+            <Card
+              key={movie.id}
+              className="bg-primary border border-accent hover:border-accent transition-colors flex flex-col h-full"
+            >
+              <CardHeader className="p-0">
+                <div className="aspect-[2/3] rounded-t-md overflow-hidden relative">
+                  <img
+                    src={movie.imageUrl || "/placeholder.jpg"}
+                    alt={movie.title}
+                    className="object-cover w-full h-full transition-transform duration-200 hover:scale-105"
+                  />
+                </div>
+              </CardHeader>
+              <CardContent className="p-4 flex flex-col flex-1">
+                <CardTitle className="text-base sm:text-lg text-secondary mb-1 line-clamp-2">
+                  {movie.title}
+                </CardTitle>
+                <CardDescription className="text-secondary mb-2">
+                  {movie.releaseYear} • {movie.director}
+                </CardDescription>
+                <div className="flex flex-wrap gap-1 mb-2">
+                  {movie.genres?.map((genre: any) => (
+                    <Badge
+                      key={genre.id || genre.name}
+                      variant="primary"
+                      className="text-xs bg-accent/20 text-accent border border-accent/30"
+                    >
+                      {genre.name}
+                    </Badge>
                   ))}
                 </div>
-              ) : (
-                <div className="text-secondary text-center py-8">No top rated movies found.</div>
-              )}
-            </TabsContent>
-          </Tabs>
-        </section>
+                <div className="flex items-center mb-4">
+                  <Star className="h-4 w-4 text-accent fill-accent mr-1" />
+                  <span className="text-accent font-bold text-lg">
+                    {movie.avgRating ? movie.avgRating.toFixed(1) : "N/A"}
+                  </span>
+                </div>
+                <div className="mt-auto" />
+              </CardContent>
+              <CardFooter className="p-4 pt-0">
+                <Button variant="primary" className="w-full">
+                  Details
+                </Button>
+              </CardFooter>
+            </Card>
+          ))}
+        </div>
+      ) : (
+        <div className="text-secondary text-center py-8">
+          No top rated movies found.
+        </div>
+      )}
+    </TabsContent>
+  </Tabs>
+</section>
+
 
         {/* Latest News Section */}
         <section className="container mx-auto px-4 py-8">
