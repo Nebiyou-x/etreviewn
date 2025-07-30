@@ -2,14 +2,22 @@
 import { NextResponse } from "next/server";
 
 export async function GET() {
-  const res = NextResponse.redirect("/auth/login");
+  try {
+    const response = NextResponse.redirect("/auth/login");
 
-  res.cookies.set("__Secure-better-auth.session_token", "", {
-    path: "/",
-    expires: new Date(0),
-    httpOnly: true,
-    secure: true, // IMPORTANT for HTTPS in production
-  });
+    response.cookies.set("__Secure-better-auth.session_token", "", {
+      path: "/",
+      httpOnly: true,
+      secure: true,
+      expires: new Date(0),
+    });
 
-  return res;
+    return response;
+  } catch (err) {
+    console.error("Logout error:", err);
+
+    return new NextResponse("Internal Server Error", {
+      status: 500,
+    });
+  }
 }
