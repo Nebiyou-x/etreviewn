@@ -172,9 +172,8 @@ export default function MoviesPageContent() {
             )}
           </div>
 
-          <div className="flex flex-col lg:flex-row gap-4 mb-6">
+          <div className="flex flex-col lg:flex-row gap-4 mb-6 items-end">
             <div className="w-full lg:w-80">
-              <label className="block mb-2 font-medium text-secondary text-sm">Filter by Genre</label>
               <select
                 className="w-full h-12 border border-accent rounded-xl px-4 py-3 bg-primary text-secondary focus:ring-2 focus:ring-accent focus:outline-none transition-all duration-200 text-sm"
                 value={genreId}
