@@ -4,18 +4,29 @@ import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { ReturnButton } from "@/components/return-button";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 export default function LogoutPage() {
   const [done, setDone] = useState(false);
+  const router = useRouter();
 
   useEffect(() => {
-    fetch("/api/manual-logout")
-      .then(() => setDone(true))
+    fetch("/api/manual-logout", { method: "GET", credentials: "include" })
+      .then((res) => {
+        if (res.ok) {
+          setDone(true);
+          // After deleting cookie, redirect
+          router.push("/auth/login");
+        } else {
+          console.error("Logout route error", res.status);
+          setDone(true);
+        }
+      })
       .catch((err) => {
         console.error("Logout failed:", err);
-        setDone(true); // still allow fallback
+        setDone(true);
       });
-  }, []);
+  }, [router]);
 
   return (
     <div className="px-8 py-16 container mx-auto max-w-screen-lg space-y-8">
