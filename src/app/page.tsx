@@ -4,10 +4,9 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Film, Star, Popcorn, Search, Calendar, Users, Home as HomeIcon, Menu, X } from "lucide-react";
+import { Film, Star, Popcorn, Search, Calendar, Users, Home as HomeIcon, Menu, X, BookOpen, TrendingUp, Award, Play, Heart } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import Link from "next/link";
-import { BookOpen } from "lucide-react";
 import { User, CalendarDays, MessageSquare } from "lucide-react";
 import "./globals.css";
 
@@ -135,7 +134,7 @@ export default function Home() {
               <div className="px-4 py-2 space-y-2">
                 <Link 
                   href="/" 
-                  className="flex items-center space-x-2 text-secondary hover:text-accent transition-colors py-2"
+                  className="flex items-center space-x-2 text-accent font-bold py-2"
                   onClick={() => setMobileMenuOpen(false)}
                 >
                   <HomeIcon className="h-4 w-4" />
@@ -163,29 +162,65 @@ export default function Home() {
         </nav>
         
         {/* Hero Section */}
-        <section className="container mx-auto px-4 py-8 sm:py-16">
-          <div className="max-w-3xl mx-auto text-center">
-            <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-4 sm:mb-6 text-secondary">
+        <section className="container mx-auto px-4 py-12 sm:py-20">
+          <div className="max-w-4xl mx-auto text-center">
+            <h2 className="text-4xl sm:text-5xl md:text-6xl font-bold mb-6 text-secondary">
               Discover & Review <span className="text-accent">Ethiopian</span> Cinema
             </h2>
-            <p className="text-base sm:text-lg text-accent mb-4 font-semibold px-4">
-              The largest and most comprehensive source for Ethiopian movie information, reviews, and news. Explore our vast collection and join the community!
+            <p className="text-lg sm:text-xl text-accent mb-6 font-semibold px-4">
+              The largest and most comprehensive source for Ethiopian movie information, reviews, and news.
             </p>
-            <p className="text-lg sm:text-xl text-secondary mb-6 sm:mb-8 px-4">
+            <p className="text-xl sm:text-2xl text-secondary mb-8 px-4">
               Track what you've watched. Share your thoughts. Find your next favorite Ethiopian film.
             </p>
-            <div className="relative max-w-xl mx-auto px-4">
-              <Input 
-                placeholder="Search for Ethiopian movies..." 
-                className="pl-12 py-4 sm:py-6"
-              />
-              <Search className="absolute left-6 top-1/2 transform -translate-y-1/2 text-secondary" />
+            
+            {/* Call to Action Buttons */}
+            <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
+              <Link href="/movies">
+                <Button size="lg" className="bg-accent text-secondary hover:bg-primary hover:text-accent px-8 py-4 text-lg">
+                  <Film className="h-5 w-5 mr-2" />
+                  Explore Movies
+                </Button>
+              </Link>
+              <Link href="/stories">
+                <Button variant="outline" size="lg" className="border-accent text-accent hover:bg-accent hover:text-secondary px-8 py-4 text-lg">
+                  <BookOpen className="h-5 w-5 mr-2" />
+                  Read News
+                </Button>
+              </Link>
             </div>
           </div>
         </section>
 
+        {/* Statistics Section */}
+        <section className="container mx-auto px-4 py-12">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-4xl mx-auto">
+            <Card className="bg-primary border-accent text-center">
+              <CardContent className="p-6">
+                <Film className="h-12 w-12 text-accent mx-auto mb-4" />
+                <h3 className="text-2xl font-bold text-secondary mb-2">{allMovies.length}+</h3>
+                <p className="text-secondary/70">Ethiopian Movies</p>
+              </CardContent>
+            </Card>
+            <Card className="bg-primary border-accent text-center">
+              <CardContent className="p-6">
+                <Users className="h-12 w-12 text-accent mx-auto mb-4" />
+                <h3 className="text-2xl font-bold text-secondary mb-2">1,000+</h3>
+                <p className="text-secondary/70">Active Users</p>
+              </CardContent>
+            </Card>
+            <Card className="bg-primary border-accent text-center">
+              <CardContent className="p-6">
+                <Star className="h-12 w-12 text-accent mx-auto mb-4" />
+                <h3 className="text-2xl font-bold text-secondary mb-2">5,000+</h3>
+                <p className="text-secondary/70">Reviews & Ratings</p>
+              </CardContent>
+            </Card>
+          </div>
+        </section>
+
         {/* Main Content */}
-        <section className="container mx-auto px-4 py-6 sm:py-8">
+        <section className="container mx-auto px-4 py-8">
           <Tabs defaultValue="top-rated" className="w-full">
             <TabsList className="grid w-full grid-cols-1 bg-primary">
               <TabsTrigger value="top-rated" className="text-secondary">
@@ -199,7 +234,7 @@ export default function Home() {
               {loadingTopList ? (
                 <div className="text-secondary text-center py-8">Loading...</div>
               ) : topRatedList && topRatedList.length > 0 ? (
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-6 mt-6">
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 mt-6">
                   {topRatedList.map((movie: any) => (
                     <Card key={movie.id} className="bg-primary border-accent hover:border-accent transition-colors">
                       <CardHeader>
@@ -207,7 +242,7 @@ export default function Home() {
                           <img
                             src={movie.imageUrl || "/placeholder.jpg"}
                             alt={movie.title}
-                            className="w-full h-full object-cover transition-transform duration-200 hover:scale-105"
+                            className="object-cover w-full h-full transition-transform duration-200 hover:scale-105"
                           />
                         </div>
                       </CardHeader>
@@ -244,34 +279,48 @@ export default function Home() {
         </section>
 
         {/* Latest News Section */}
-        <section className="container mx-auto px-4 py-6 sm:py-8">
-          <h3 className="text-xl sm:text-2xl font-bold mb-4 text-secondary flex items-center">
-            <BookOpen className="h-5 w-5 sm:h-6 sm:w-6 mr-2 text-accent" /> Latest News
-          </h3>
+        <section className="container mx-auto px-4 py-8">
+          <div className="flex items-center justify-between mb-6">
+            <h3 className="text-2xl sm:text-3xl font-bold text-secondary flex items-center">
+              <BookOpen className="h-6 w-6 mr-3 text-accent" /> Latest News
+            </h3>
+            <Link href="/stories">
+              <Button variant="outline" className="text-accent border-accent hover:bg-accent hover:text-secondary">
+                View All News
+              </Button>
+            </Link>
+          </div>
           {loadingNews ? (
             <div className="text-secondary text-center py-8">Loading...</div>
           ) : latestNews && latestNews.length > 0 ? (
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               {latestNews.map((news: any) => (
-                <Card key={news.id} className="bg-primary border-accent">
+                <Card key={news.id} className="bg-primary border-accent hover:border-accent transition-colors">
                   {news.imageUrl && (
                     <CardHeader className="p-0">
-                      <div className="aspect-video bg-primary rounded-t-md overflow-hidden">
+                      <div className="aspect-video bg-primary rounded-t-xl overflow-hidden">
                         <img
                           src={news.imageUrl}
                           alt={news.title}
-                          className="w-full h-full object-cover transition-transform duration-200 hover:scale-105"
+                          className="object-cover w-full h-full transition-transform duration-200 hover:scale-105"
                         />
                       </div>
                     </CardHeader>
                   )}
-                  <CardContent className="p-3 sm:p-4">
-                    <CardTitle className="text-base sm:text-lg text-secondary line-clamp-2">{news.title}</CardTitle>
+                  <CardContent className="p-4">
+                    <CardTitle className="text-lg text-secondary line-clamp-2">{news.title}</CardTitle>
                     <CardDescription className="text-secondary mb-2">
                       By {news.author} • {new Date(news.createdAt).toLocaleDateString()}
                     </CardDescription>
                     <p className="text-secondary line-clamp-3">{news.content}</p>
                   </CardContent>
+                  <CardFooter className="p-4">
+                    <Link href={`/stories/${news.id}`} className="w-full">
+                      <Button className="w-full bg-accent text-secondary hover:bg-primary hover:text-accent">
+                        Read Full Story
+                      </Button>
+                    </Link>
+                  </CardFooter>
                 </Card>
               ))}
             </div>
@@ -281,9 +330,9 @@ export default function Home() {
         </section>
 
         {/* Popular Review Section */}
-        <section className="container mx-auto px-4 py-6 sm:py-8">
-          <h3 className="text-xl sm:text-2xl font-bold mb-4 text-secondary flex items-center">
-            <Star className="h-5 w-5 sm:h-6 sm:w-6 mr-2 text-accent" /> Popular Reviews
+        <section className="container mx-auto px-4 py-8">
+          <h3 className="text-2xl sm:text-3xl font-bold mb-6 text-secondary flex items-center">
+            <Heart className="h-6 w-6 mr-3 text-accent" /> Popular Reviews
           </h3>
           {loadingPopularReview ? (
             <div className="text-secondary text-center py-8">Loading...</div>
@@ -291,7 +340,7 @@ export default function Home() {
             <Card className="bg-primary border-accent border-2 shadow-lg max-w-2xl mx-auto">
               <CardHeader>
                 <div className="flex items-center gap-4">
-                  <div className="rounded-full bg-accent w-10 h-10 sm:w-12 sm:h-12 flex items-center justify-center text-lg sm:text-xl font-bold text-secondary">
+                  <div className="rounded-full bg-accent w-12 h-12 flex items-center justify-center text-xl font-bold text-secondary">
                     {popularReview.user?.name?.[0] || "U"}
                   </div>
                   <div>
@@ -300,7 +349,7 @@ export default function Home() {
                   </div>
                 </div>
               </CardHeader>
-              <CardContent className="p-3 sm:p-4">
+              <CardContent className="p-4">
                 <div className="flex items-center mb-2">
                   <Star className="h-4 w-4 text-accent fill-accent mr-1" />
                   <span className="text-secondary font-bold text-lg">{popularReview.rating}</span>
@@ -315,21 +364,21 @@ export default function Home() {
         </section>
 
         {/* Footer */}
-        <footer className="border-t border-accent py-6 sm:py-8 bg-primary">
+        <footer className="border-t border-accent py-8 bg-primary">
           <div className="container mx-auto px-4">
             <div className="flex flex-col md:flex-row justify-between items-center">
               <div className="flex items-center space-x-2 mb-4 md:mb-0">
-                <Film className="h-5 w-5 sm:h-6 sm:w-6 text-accent" />
-                <h4 className="text-lg sm:text-xl font-bold text-secondary">Ethio<span className="text-accent">Flix</span></h4>
+                <Film className="h-6 w-6 text-accent" />
+                <h4 className="text-xl font-bold text-secondary">Ethio<span className="text-accent">Flix</span></h4>
               </div>
-              <div className="flex flex-wrap justify-center gap-4 sm:gap-6">
+              <div className="flex space-x-6">
                 <Link href="#" className="text-secondary hover:text-accent transition-colors">About</Link>
                 <Link href="#" className="text-secondary hover:text-accent transition-colors">Privacy</Link>
                 <Link href="#" className="text-secondary hover:text-accent transition-colors">Terms</Link>
                 <Link href="#" className="text-secondary hover:text-accent transition-colors">Contact</Link>
               </div>
             </div>
-            <p className="text-center text-secondary mt-6 sm:mt-8">
+            <p className="text-center text-secondary mt-8">
               © {new Date().getFullYear()} EthioFlix. Celebrating Ethiopian cinema.
             </p>
           </div>
