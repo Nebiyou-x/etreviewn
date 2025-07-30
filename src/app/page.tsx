@@ -87,6 +87,14 @@ export default function Home() {
       .catch(() => setLoadingAllMovies(false));
   }, []);
 
+  const [stats, setStats] = useState<{ userCount: number; reviewCount: number } | null>(null);
+
+  useEffect(() => {
+    fetch("/api/stats")
+      .then((res) => res.json())
+      .then((data) => setStats(data));
+  }, []);
+
   return (
     <div className="min-h-screen w-full bg-primary relative overflow-x-hidden">
       {/* Main Content Layer */}
@@ -205,14 +213,14 @@ export default function Home() {
             <Card className="bg-primary border-accent text-center">
               <CardContent className="p-6">
                 <Users className="h-12 w-12 text-accent mx-auto mb-4" />
-                <h3 className="text-2xl font-bold text-secondary mb-2">1,000+</h3>
+                <h3 className="text-2xl font-bold text-secondary mb-2">{stats ? stats.userCount : '...'}+</h3>
                 <p className="text-secondary/70">Active Users</p>
               </CardContent>
             </Card>
             <Card className="bg-primary border-accent text-center">
               <CardContent className="p-6">
                 <Star className="h-12 w-12 text-accent mx-auto mb-4" />
-                <h3 className="text-2xl font-bold text-secondary mb-2">5,000+</h3>
+                <h3 className="text-2xl font-bold text-secondary mb-2">{stats ? stats.reviewCount : '...'}+</h3>
                 <p className="text-secondary/70">Reviews & Ratings</p>
               </CardContent>
             </Card>
