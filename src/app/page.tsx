@@ -244,7 +244,7 @@ export default function Home() {
               ) : topRatedList && topRatedList.length > 0 ? (
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 mt-6">
                   {topRatedList.map((movie: any) => (
-                    <Card key={movie.id} className="bg-primary border-accent hover:border-accent transition-colors">
+                    <Card key={movie.id} className="bg-primary border-accent hover:border-accent transition-colors flex flex-col h-full">
                       <CardHeader>
                         <div className="aspect-[2/3] bg-primary rounded-md overflow-hidden relative">
                           <img
@@ -254,25 +254,26 @@ export default function Home() {
                           />
                         </div>
                       </CardHeader>
-                      <CardContent className="p-3 sm:p-4">
-                        <CardTitle className="text-base sm:text-lg text-secondary">{movie.title}</CardTitle>
-                        <CardDescription className="text-secondary">
+                      <CardContent className="p-3 sm:p-4 flex-1 flex flex-col">
+                        <CardTitle className="text-base sm:text-lg text-secondary mb-1 line-clamp-2">{movie.title}</CardTitle>
+                        <CardDescription className="text-secondary mb-2">
                           {movie.releaseYear} • {movie.director}
                         </CardDescription>
-                        <div className="flex flex-wrap gap-1 mt-2">
+                        <div className="flex flex-wrap gap-1 mb-2">
                           {movie.genres && movie.genres.map((genre: any) => (
-                            <Badge key={genre.id || genre.name} variant="primary" className="text-xs">
+                            <Badge key={genre.id || genre.name} variant="primary" className="text-xs bg-accent/20 text-accent border-accent/30">
                               {genre.name}
                             </Badge>
                           ))}
                         </div>
-                        <div className="flex items-center mt-2">
+                        <div className="flex items-center mb-4">
                           <Star className="h-4 w-4 text-accent fill-accent mr-1" />
-                          <span className="text-secondary font-bold text-lg">{movie.avgRating ? movie.avgRating.toFixed(1) : "N/A"}</span>
+                          <span className="text-accent font-bold text-lg">{movie.avgRating ? movie.avgRating.toFixed(1) : "N/A"}</span>
                         </div>
+                        <div className="mt-auto" />
                       </CardContent>
-                      <CardFooter className="flex items-center p-3 sm:p-4">
-                        <Button variant="primary" className="ml-auto">
+                      <CardFooter className="flex items-center p-3 sm:p-4 mt-auto">
+                        <Button variant="primary" className="w-full">
                           Details
                         </Button>
                       </CardFooter>
