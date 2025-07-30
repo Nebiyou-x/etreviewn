@@ -61,33 +61,33 @@ export default function AddMovieForm() {
       <form className="space-y-4 max-w-md" onSubmit={handleSubmit} ref={formRef}>
         <div>
           <label className="block mb-1 font-medium">Title</label>
-          <input name="title" className="w-full border rounded px-3 py-2" required />
+          <input name="title" className="w-full border border-accent rounded px-3 py-2 text-secondary placeholder-secondary bg-primary" required />
         </div>
         <div>
           <label className="block mb-1 font-medium">Description</label>
-          <textarea name="description" className="w-full border rounded px-3 py-2" required />
+          <textarea name="description" className="w-full border border-accent rounded px-3 py-2 text-secondary placeholder-secondary bg-primary" required />
         </div>
         <div>
           <label className="block mb-1 font-medium">Director</label>
-          <input name="director" className="w-full border rounded px-3 py-2" />
+          <input name="director" className="w-full border border-accent rounded px-3 py-2 text-secondary placeholder-secondary bg-primary" />
         </div>
         <div>
           <label className="block mb-1 font-medium">Release Year</label>
-          <input name="releaseYear" type="number" className="w-full border rounded px-3 py-2" />
+          <input name="releaseYear" type="number" className="w-full border border-accent rounded px-3 py-2 text-secondary placeholder-secondary bg-primary" />
         </div>
         <div>
           <label className="block mb-1 font-medium">Image URL</label>
-          <input name="imageUrl" className="w-full border rounded px-3 py-2" />
+          <input name="imageUrl" className="w-full border border-accent rounded px-3 py-2 text-secondary placeholder-secondary bg-primary" />
         </div>
         <div>
           <label className="block mb-1 font-medium">Watch Link</label>
-          <input name="watchUrl" className="w-full border rounded px-3 py-2" placeholder="https://..." />
+          <input name="watchUrl" className="w-full border border-accent rounded px-3 py-2 text-secondary placeholder-secondary bg-primary" placeholder="https://..." />
         </div>
         <div>
           <Label className="block mb-1 font-medium">Genres</Label>
           <select
             multiple
-            className="w-full border rounded px-3 py-2"
+            className="w-full border border-accent rounded px-3 py-2 text-secondary bg-primary"
             value={selectedGenres}
             onChange={e => {
               const options = Array.from(e.target.selectedOptions);
@@ -95,7 +95,7 @@ export default function AddMovieForm() {
             }}
           >
             {genres.map((genre) => (
-              <option key={genre.id} value={genre.id}>
+              <option key={genre.id} value={genre.id} className="text-primary bg-secondary">
                 {genre.name}
               </option>
             ))}
