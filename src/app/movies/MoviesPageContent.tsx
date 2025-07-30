@@ -173,7 +173,7 @@ export default function MoviesPageContent() {
           </div>
 
           <div className="flex flex-col lg:flex-row gap-4 mb-6">
-            <div className="w-full lg:w-64">
+            <div className="w-full lg:w-80">
               <label className="block mb-2 font-medium text-secondary text-sm">Filter by Genre</label>
               <select
                 className="w-full h-12 border border-accent rounded-xl px-4 py-3 bg-primary text-secondary focus:ring-2 focus:ring-accent focus:outline-none transition-all duration-200 text-sm"
@@ -186,7 +186,7 @@ export default function MoviesPageContent() {
                 ))}
               </select>
             </div>
-            <form method="GET" action="/movies" className="flex flex-1 max-w-lg">
+            <form method="GET" action="/movies" className="flex flex-1 max-w-md">
               <input
                 type="text"
                 name="search"
