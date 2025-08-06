@@ -2,7 +2,7 @@
 import React, { useState } from "react";
 import { Card, CardHeader, CardContent, CardFooter } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { BookOpen, User, CalendarDays, Film, Plus, Trash2, Menu, X } from "lucide-react";
+import { BookOpen, User, CalendarDays, Film, Plus, Trash2, Menu, X } from 'lucide-react';
 import Link from "next/link";
 import { Badge } from "@/components/ui/badge";
 
@@ -48,6 +48,11 @@ export default function StoriesPageClient({ initialNews, isAdmin }: { initialNew
             </div>
           </div>
 
+          {/* Desktop Auth Links */}
+          <div className="hidden md:flex items-center space-x-4">
+            <Link href="/auth/login" className="text-accent font-bold hover:underline">Sign In</Link>
+          </div>
+
           {/* Mobile Menu Button */}
           <button
             className="md:hidden p-2 text-secondary hover:text-accent transition-colors"
@@ -56,6 +61,42 @@ export default function StoriesPageClient({ initialNews, isAdmin }: { initialNew
             {mobileMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
           </button>
         </div>
+
+        {/* Mobile Navigation */}
+        {mobileMenuOpen && (
+          <div className="md:hidden border-t border-accent bg-primary">
+            <div className="px-4 py-2 space-y-2">
+              <Link 
+                href="/" 
+                className="flex items-center space-x-2 text-secondary hover:text-accent transition-colors py-2"
+                onClick={() => setMobileMenuOpen(false)}
+              >
+                <span>Home</span>
+              </Link>
+              <Link 
+                href="/movies" 
+                className="flex items-center space-x-2 text-secondary hover:text-accent transition-colors py-2"
+                onClick={() => setMobileMenuOpen(false)}
+              >
+                <span>Movies</span>
+              </Link>
+              <Link 
+                href="/stories" 
+                className="flex items-center space-x-2 text-accent font-bold py-2"
+                onClick={() => setMobileMenuOpen(false)}
+              >
+                <span>News</span>
+              </Link>
+              <Link 
+                href="/auth/login" 
+                className="flex items-center space-x-2 text-accent font-bold py-2"
+                onClick={() => setMobileMenuOpen(false)}
+              >
+                <span>Sign In</span>
+              </Link>
+            </div>
+          </div>
+        )}
       </nav>
       <div className="max-w-7xl mx-auto px-4 py-12">
         <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-8 gap-4">
@@ -88,7 +129,7 @@ export default function StoriesPageClient({ initialNews, isAdmin }: { initialNew
               </CardHeader>
               <CardContent className="space-y-4 flex-1">
                 {story.imageUrl && (
-                  <img src={story.imageUrl} alt={story.title} className="w-full h-44 object-cover rounded-xl mb-2 shadow-md" />
+                  <img src={story.imageUrl || "/placeholder.svg"} alt={story.title} className="w-full h-44 object-cover rounded-xl mb-2 shadow-md" />
                 )}
                 <div className="flex flex-wrap gap-2">
                   {story.tags.map((tag: string) => (
@@ -138,13 +179,13 @@ export default function StoriesPageClient({ initialNews, isAdmin }: { initialNew
           <div className="flex flex-col md:flex-row justify-between items-center">
             <div className="flex items-center space-x-2 mb-4 md:mb-0">
               <BookOpen className="h-6 w-6 text-accent" />
-              <h4 className="text-xl font-bold">Ethio<span className="text-accent">Flix</span></h4>
+              <h4 className="text-xl font-bold text-secondary">Ethio<span className="text-accent">Flix</span></h4>
             </div>
             <div className="flex space-x-6">
-              <Link href="/about" className="text-secondary hover:text-accent">About</Link>
-              <Link href="/privacy" className="text-secondary hover:text-accent">Privacy</Link>
-              <Link href="/terms" className="text-secondary hover:text-accent">Terms</Link>
-              <Link href="/contact" className="text-secondary hover:text-accent">Contact</Link>
+              <Link href="/about" className="text-secondary hover:text-accent transition-colors">About</Link>
+              <Link href="/privacy" className="text-secondary hover:text-accent transition-colors">Privacy</Link>
+              <Link href="/terms" className="text-secondary hover:text-accent transition-colors">Terms</Link>
+              <Link href="/contact" className="text-secondary hover:text-accent transition-colors">Contact</Link>
             </div>
           </div>
           <p className="text-center text-secondary mt-8">
@@ -154,4 +195,4 @@ export default function StoriesPageClient({ initialNews, isAdmin }: { initialNew
       </footer>
     </div>
   );
-} 
+}
