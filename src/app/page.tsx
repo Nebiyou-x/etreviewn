@@ -4,10 +4,10 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Film, Star, Popcorn, Search, Calendar, Users, Home as HomeIcon, Menu, X, BookOpen, TrendingUp, Award, Play, Heart } from "lucide-react";
+import { Film, Star, Popcorn, Search, Calendar, Users, HomeIcon, Menu, X, BookOpen, TrendingUp, Award, Play, Heart } from 'lucide-react';
 import { Badge } from "@/components/ui/badge";
 import Link from "next/link";
-import { User, CalendarDays, MessageSquare } from "lucide-react";
+import { User, CalendarDays, MessageSquare } from 'lucide-react';
 import "./globals.css";
 
 export default function Home() {
@@ -127,6 +127,11 @@ export default function Home() {
               </div>
             </div>
 
+            {/* Desktop Auth Links */}
+            <div className="hidden md:flex items-center space-x-4">
+              <Link href="/auth/login" className="text-accent font-bold hover:underline">Sign In</Link>
+            </div>
+
             {/* Mobile Menu Button */}
             <button
               className="md:hidden p-2 text-secondary hover:text-accent transition-colors"
@@ -163,6 +168,13 @@ export default function Home() {
                 >
                   <BookOpen className="h-4 w-4" />
                   <span>News</span>
+                </Link>
+                <Link 
+                  href="/auth/login" 
+                  className="flex items-center space-x-2 text-accent font-bold py-2"
+                  onClick={() => setMobileMenuOpen(false)}
+                >
+                  <span>Sign In</span>
                 </Link>
               </div>
             </div>
@@ -329,7 +341,7 @@ export default function Home() {
                     <CardHeader className="p-0">
                       <div className="aspect-video bg-primary rounded-t-xl overflow-hidden">
                         <img
-                          src={news.imageUrl}
+                          src={news.imageUrl || "/placeholder.svg"}
                           alt={news.title}
                           className="object-cover w-full h-full transition-transform duration-200 hover:scale-105"
                         />
@@ -401,10 +413,10 @@ export default function Home() {
                 <h4 className="text-xl font-bold text-secondary">Ethio<span className="text-accent">Flix</span></h4>
               </div>
               <div className="flex space-x-6">
-                <Link href="#" className="text-secondary hover:text-accent transition-colors">About</Link>
-                <Link href="#" className="text-secondary hover:text-accent transition-colors">Privacy</Link>
-                <Link href="#" className="text-secondary hover:text-accent transition-colors">Terms</Link>
-                <Link href="#" className="text-secondary hover:text-accent transition-colors">Contact</Link>
+                <Link href="/about" className="text-secondary hover:text-accent transition-colors">About</Link>
+                <Link href="/privacy" className="text-secondary hover:text-accent transition-colors">Privacy</Link>
+                <Link href="/terms" className="text-secondary hover:text-accent transition-colors">Terms</Link>
+                <Link href="/contact" className="text-secondary hover:text-accent transition-colors">Contact</Link>
               </div>
             </div>
             <p className="text-center text-secondary mt-8">
