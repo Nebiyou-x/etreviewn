@@ -1,0 +1,44 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+@tailwind variants;
+@tailwind screens;
+
+@layer base {
+  :root {
+    --background: 220 26% 14%; /* #1F2937 */
+    --foreground: 0 0% 100%;   /* #FFFFFF */
+    --primary: 220 26% 14%;    /* #1F2937 */
+    --primary-foreground: 0 0% 100%; /* #FFFFFF */
+    --secondary: 0 0% 100%;    /* #FFFFFF */
+    --secondary-foreground: 220 26% 14%; /* #1F2937 */
+    --accent: 160 84% 39%;     /* #10B981 */
+    --accent-foreground: 0 0% 100%; /* #FFFFFF */
+    --border: 220 26% 14%;
+    --input: 220 26% 14%;
+    --ring: 160 84% 39%;
+  }
+  .dark {
+    --background: 220 26% 14%;
+    --foreground: 0 0% 100%;
+    --primary: 220 26% 14%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 0 0% 100%;
+    --secondary-foreground: 220 26% 14%;
+    --accent: 160 84% 39%;
+    --accent-foreground: 0 0% 100%;
+    --border: 220 26% 14%;
+    --input: 220 26% 14%;
+    --ring: 160 84% 39%;
+  }
+}
+
+@layer base {
+  * {
+    border-color: hsl(var(--border));
+  }
+  body {
+    background-color: hsl(var(--background));
+    color: hsl(var(--foreground));
+  }
+}
