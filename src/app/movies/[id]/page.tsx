@@ -10,6 +10,8 @@ import StarRating from "@/components/StarRating";
 import { authClient } from "@/lib/auth-client";
 import QuickStarRating from "@/components/QuickStarRating";
 import PaginatedReviews from "@/components/PaginatedReviews";
+import { Footer } from "@/components/footer";
+import { Navbar } from "@/components/Navbar";
 
 // ✅ Wrapper to satisfy Next.js runtime handling
 export default function PageWrapper(props: { params: { id: string } }) {
@@ -40,6 +42,9 @@ async function MovieDetailsPage({ params }: { params: { id: string } }) {
   const ratingCount = ratingReviews.length;
 
   return (
+    <>
+    <Navbar/>
+
     <div className="min-h-screen w-full bg-primary flex items-center justify-center py-4 sm:py-8 px-2">
       <div className="relative w-full max-w-4xl rounded-3xl shadow-2xl bg-primary border border-accent overflow-hidden">
         <div className="relative z-10 flex flex-col lg:flex-row gap-6 sm:gap-10 p-4 sm:p-6 md:p-10">
@@ -142,5 +147,7 @@ async function MovieDetailsPage({ params }: { params: { id: string } }) {
         </div>
       </div>
     </div>
+    <Footer />
+    </>
   );
 }

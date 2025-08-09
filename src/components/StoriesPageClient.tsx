@@ -30,74 +30,7 @@ export default function StoriesPageClient({ initialNews, isAdmin }: { initialNew
   return (
     <div className="min-h-screen w-full bg-primary">
       {/* Glassy Navbar */}
-      <nav className="sticky top-0 z-30 bg-primary border-b border-accent shadow-md">
-        <div className="max-w-7xl mx-auto px-4 py-4 flex items-center justify-between">
-          <div className="flex items-center space-x-2">
-            <BookOpen className="h-8 w-8 text-accent drop-shadow" />
-            <Link href="/" className="text-2xl font-extrabold tracking-tight text-secondary">
-              Ethio<span className="text-accent">Flix</span>
-            </Link>
-          </div>
-          
-          {/* Centered Navigation */}
-          <div className="hidden md:flex items-center justify-center flex-1">
-            <div className="flex items-center space-x-8">
-              <Link href="/" className="text-secondary hover:text-accent transition font-medium">Home</Link>
-              <Link href="/movies" className="text-secondary hover:text-accent transition font-medium">Movies</Link>
-              <Link href="/stories" className="text-accent font-bold">News</Link>
-            </div>
-          </div>
-
-          {/* Desktop Auth Links */}
-          <div className="hidden md:flex items-center space-x-4">
-            <Link href="/auth/login" className="text-accent font-bold hover:underline">Sign In</Link>
-          </div>
-
-          {/* Mobile Menu Button */}
-          <button
-            className="md:hidden p-2 text-secondary hover:text-accent transition-colors"
-            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-          >
-            {mobileMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
-          </button>
-        </div>
-
-        {/* Mobile Navigation */}
-        {mobileMenuOpen && (
-          <div className="md:hidden border-t border-accent bg-primary">
-            <div className="px-4 py-2 space-y-2">
-              <Link 
-                href="/" 
-                className="flex items-center space-x-2 text-secondary hover:text-accent transition-colors py-2"
-                onClick={() => setMobileMenuOpen(false)}
-              >
-                <span>Home</span>
-              </Link>
-              <Link 
-                href="/movies" 
-                className="flex items-center space-x-2 text-secondary hover:text-accent transition-colors py-2"
-                onClick={() => setMobileMenuOpen(false)}
-              >
-                <span>Movies</span>
-              </Link>
-              <Link 
-                href="/stories" 
-                className="flex items-center space-x-2 text-accent font-bold py-2"
-                onClick={() => setMobileMenuOpen(false)}
-              >
-                <span>News</span>
-              </Link>
-              <Link 
-                href="/auth/login" 
-                className="flex items-center space-x-2 text-accent font-bold py-2"
-                onClick={() => setMobileMenuOpen(false)}
-              >
-                <span>Sign In</span>
-              </Link>
-            </div>
-          </div>
-        )}
-      </nav>
+     
       <div className="max-w-7xl mx-auto px-4 py-12">
         <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-8 gap-4">
           <div className="flex items-center space-x-4">
@@ -174,25 +107,7 @@ export default function StoriesPageClient({ initialNews, isAdmin }: { initialNew
         </div>
       </div>
       {/* Glassy Footer */}
-      <footer className="border-t border-accent py-8 bg-primary">
-        <div className="max-w-7xl mx-auto px-4">
-          <div className="flex flex-col md:flex-row justify-between items-center">
-            <div className="flex items-center space-x-2 mb-4 md:mb-0">
-              <BookOpen className="h-6 w-6 text-accent" />
-              <h4 className="text-xl font-bold text-secondary">Ethio<span className="text-accent">Flix</span></h4>
-            </div>
-            <div className="flex space-x-6">
-              <Link href="/about" className="text-secondary hover:text-accent transition-colors">About</Link>
-              <Link href="/privacy" className="text-secondary hover:text-accent transition-colors">Privacy</Link>
-              <Link href="/terms" className="text-secondary hover:text-accent transition-colors">Terms</Link>
-              <Link href="/contact" className="text-secondary hover:text-accent transition-colors">Contact</Link>
-            </div>
-          </div>
-          <p className="text-center text-secondary mt-8">
-            © {new Date().getFullYear()} EthioFlix. Celebrating Ethiopian cinema.
-          </p>
-        </div>
-      </footer>
+      
     </div>
   );
 }

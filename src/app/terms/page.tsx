@@ -1,33 +1,13 @@
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { ArrowLeft, Film } from 'lucide-react';
+import { Navbar } from "@/components/Navbar";
 
 export default function TermsPage() {
   return (
     <div className="min-h-screen w-full bg-primary">
       {/* Navigation */}
-      <nav className="border-b border-accent bg-primary">
-        <div className="container mx-auto px-4 py-4 flex items-center justify-between">
-          <div className="flex items-center space-x-2">
-            <Film className="h-6 w-6 sm:h-8 sm:w-8 text-accent" />
-            <Link href="/" className="text-xl sm:text-2xl font-bold text-secondary">
-              Ethio<span className="text-accent">Flix</span>
-            </Link>
-          </div>
-          
-          <div className="hidden md:flex items-center justify-center flex-1">
-            <div className="flex items-center space-x-8">
-              <Link href="/" className="text-secondary hover:text-accent transition font-medium">Home</Link>
-              <Link href="/movies" className="text-secondary hover:text-accent transition font-medium">Movies</Link>
-              <Link href="/stories" className="text-secondary hover:text-accent transition font-medium">News</Link>
-            </div>
-          </div>
-
-          <div className="hidden md:flex items-center space-x-4">
-            <Link href="/auth/login" className="text-accent font-bold hover:underline">Sign In</Link>
-          </div>
-        </div>
-      </nav>
+      <Navbar/>
 
       <div className="container mx-auto px-4 py-16 max-w-4xl">
         <Link href="/">

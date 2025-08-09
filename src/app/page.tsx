@@ -7,11 +7,15 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Film, Star, Popcorn, Search, Calendar, Users, HomeIcon, Menu, X, BookOpen, TrendingUp, Award, Play, Heart } from 'lucide-react';
 import { Badge } from "@/components/ui/badge";
 import Link from "next/link";
-import { User, CalendarDays, MessageSquare } from 'lucide-react';
+import { authClient } from "@/lib/auth-client";
 import "./globals.css";
+import { Footer } from "@/components/footer";
+import { Navbar } from "@/components/Navbar";
 
 export default function Home() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [userData, setUserData] = useState<{ name: string; email: string } | null>(null);
 
   // Top Rated Movie (dynamic fetch)
   const [topRatedMovie, setTopRatedMovie] = useState<any>(null);
@@ -31,6 +35,7 @@ export default function Home() {
   // Add after the top rated movie state
   const [topRatedList, setTopRatedList] = useState<any[]>([]);
   const [loadingTopList, setLoadingTopList] = useState(true);
+  const { data: session } = authClient.useSession();
 
   useEffect(() => {
     setLoadingTopList(true);
@@ -95,91 +100,37 @@ export default function Home() {
       .then((data) => setStats(data));
   }, []);
 
+  // Check authentication status
+  useEffect(() => {
+    fetch("/api/auth/status")
+      .then((res) => res.json())
+      .then((data) => {
+        setIsAuthenticated(data.isAuthenticated);
+        if (data.isAuthenticated && data.user) {
+          setUserData(data.user);
+        }
+      })
+      .catch(() => setIsAuthenticated(false));
+  }, []);
+
+  // Handle sign out
+  const handleSignOut = () => {
+    fetch("/api/auth/signout", { method: "POST" })
+      .then(() => {
+        setIsAuthenticated(false);
+        setUserData(null);
+        // Optional: redirect to home page
+        window.location.href = "/";
+      })
+      .catch(console.error);
+  };
+
   return (
     <div className="min-h-screen w-full bg-primary relative overflow-x-hidden">
       {/* Main Content Layer */}
       <div className="relative z-10">
         {/* Navigation */}
-        <nav className="border-b border-accent bg-primary">
-          <div className="container mx-auto px-4 py-4 flex items-center justify-between">
-            <div className="flex items-center space-x-2">
-              <Film className="h-6 w-6 sm:h-8 sm:w-8 text-accent" />
-              <Link href="/" className="text-xl sm:text-2xl font-bold text-secondary">
-                Ethio<span className="text-accent">Flix</span>
-              </Link>
-            </div>
-            
-            {/* Centered Navigation */}
-            <div className="hidden md:flex items-center justify-center flex-1">
-              <div className="flex items-center space-x-8">
-                <Link href="/" className="flex items-center space-x-1 text-accent font-bold">
-                  <HomeIcon className="h-4 w-4" />
-                  <span>Home</span>
-                </Link>
-                <Link href="/movies" className="flex items-center space-x-1 text-secondary hover:text-accent transition-colors">
-                  <Film className="h-4 w-4" />
-                  <span>Movies</span>
-                </Link>
-                <Link href="/stories" className="flex items-center space-x-1 text-secondary hover:text-accent transition-colors">
-                  <BookOpen className="h-4 w-4" />
-                  <span>News</span>
-                </Link>
-              </div>
-            </div>
-
-            {/* Desktop Auth Links */}
-            <div className="hidden md:flex items-center space-x-4">
-              <Link href="/auth/login" className="text-accent font-bold hover:underline">Sign In</Link>
-            </div>
-
-            {/* Mobile Menu Button */}
-            <button
-              className="md:hidden p-2 text-secondary hover:text-accent transition-colors"
-              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            >
-              {mobileMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
-            </button>
-          </div>
-
-          {/* Mobile Navigation */}
-          {mobileMenuOpen && (
-            <div className="md:hidden border-t border-accent bg-primary">
-              <div className="px-4 py-2 space-y-2">
-                <Link 
-                  href="/" 
-                  className="flex items-center space-x-2 text-accent font-bold py-2"
-                  onClick={() => setMobileMenuOpen(false)}
-                >
-                  <HomeIcon className="h-4 w-4" />
-                  <span>Home</span>
-                </Link>
-                <Link 
-                  href="/movies" 
-                  className="flex items-center space-x-2 text-secondary hover:text-accent transition-colors py-2"
-                  onClick={() => setMobileMenuOpen(false)}
-                >
-                  <Film className="h-4 w-4" />
-                  <span>Movies</span>
-                </Link>
-                <Link 
-                  href="/stories" 
-                  className="flex items-center space-x-2 text-secondary hover:text-accent transition-colors py-2"
-                  onClick={() => setMobileMenuOpen(false)}
-                >
-                  <BookOpen className="h-4 w-4" />
-                  <span>News</span>
-                </Link>
-                <Link 
-                  href="/auth/login" 
-                  className="flex items-center space-x-2 text-accent font-bold py-2"
-                  onClick={() => setMobileMenuOpen(false)}
-                >
-                  <span>Sign In</span>
-                </Link>
-              </div>
-            </div>
-          )}
-        </nav>
+        <Navbar/>
         
         {/* Hero Section */}
         <section className="container mx-auto px-4 py-12 sm:py-20">
@@ -237,87 +188,85 @@ export default function Home() {
               </CardContent>
             </Card>
           </div>
-          </section>
+        </section>
 
-{/* Main Content */}
-<section className="container mx-auto px-4 py-8">
-  <Tabs defaultValue="top-rated" className="w-full">
-  <TabsList className="w-full bg-primary border border-accent rounded-2xl overflow-hidden mb-6 flex">
-  <TabsTrigger
-    value="top-rated"
-    className="w-full text-secondary font-semibold py-4 px-6 text-center data-[state=active]:bg-accent data-[state=active]:text-secondary transition-colors"
-  >
-    <div className="flex items-center justify-center gap-2">
-      <Star className="h-5 w-5 text-accent data-[state=active]:text-secondary transition-colors" />
-      <span>Top Rated</span>
-    </div>
-  </TabsTrigger>
-</TabsList>
-
-
-    {/* Top Rated Tab */}
-    <TabsContent value="top-rated">
-      {loadingTopList ? (
-        <div className="text-secondary text-center py-8">Loading...</div>
-      ) : topRatedList && topRatedList.length > 0 ? (
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-          {topRatedList.map((movie: any) => (
-            <Card
-              key={movie.id}
-              className="bg-primary border border-accent hover:border-accent transition-colors flex flex-col h-full"
-            >
-              <CardHeader className="p-0">
-                <div className="aspect-[2/3] rounded-t-md overflow-hidden relative">
-                  <img
-                    src={movie.imageUrl || "/placeholder.jpg"}
-                    alt={movie.title}
-                    className="object-cover w-full h-full transition-transform duration-200 hover:scale-105"
-                  />
+        {/* Main Content */}
+        <section className="container mx-auto px-4 py-8">
+          <Tabs defaultValue="top-rated" className="w-full">
+            <TabsList className="w-full bg-primary border border-accent rounded-2xl overflow-hidden mb-6 flex">
+              <TabsTrigger
+                value="top-rated"
+                className="w-full text-secondary font-semibold py-4 px-6 text-center data-[state=active]:bg-accent data-[state=active]:text-secondary transition-colors"
+              >
+                <div className="flex items-center justify-center gap-2">
+                  <Star className="h-5 w-5 text-accent data-[state=active]:text-secondary transition-colors" />
+                  <span>Top Rated</span>
                 </div>
-              </CardHeader>
-              <CardContent className="p-4 flex flex-col flex-1">
-                <CardTitle className="text-base sm:text-lg text-secondary mb-1 line-clamp-2">
-                  {movie.title}
-                </CardTitle>
-                <CardDescription className="text-secondary mb-2">
-                  {movie.releaseYear} • {movie.director}
-                </CardDescription>
-                <div className="flex flex-wrap gap-1 mb-2">
-                  {movie.genres?.map((genre: any) => (
-                    <Badge
-                      key={genre.id || genre.name}
-                      variant="primary"
-                      className="text-xs bg-accent/20 text-accent border border-accent/30"
+              </TabsTrigger>
+            </TabsList>
+
+            {/* Top Rated Tab */}
+            <TabsContent value="top-rated">
+              {loadingTopList ? (
+                <div className="text-secondary text-center py-8">Loading...</div>
+              ) : topRatedList && topRatedList.length > 0 ? (
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+                  {topRatedList.map((movie: any) => (
+                    <Card
+                      key={movie.id}
+                      className="bg-primary border border-accent hover:border-accent transition-colors flex flex-col h-full"
                     >
-                      {genre.name}
-                    </Badge>
+                      <CardHeader className="p-0">
+                        <div className="aspect-[2/3] rounded-t-md overflow-hidden relative">
+                          <img
+                            src={movie.imageUrl || "/placeholder.jpg"}
+                            alt={movie.title}
+                            className="object-cover w-full h-full transition-transform duration-200 hover:scale-105"
+                          />
+                        </div>
+                      </CardHeader>
+                      <CardContent className="p-4 flex flex-col flex-1">
+                        <CardTitle className="text-base sm:text-lg text-secondary mb-1 line-clamp-2">
+                          {movie.title}
+                        </CardTitle>
+                        <CardDescription className="text-secondary mb-2">
+                          {movie.releaseYear} • {movie.director}
+                        </CardDescription>
+                        <div className="flex flex-wrap gap-1 mb-2">
+                          {movie.genres?.map((genre: any) => (
+                            <Badge
+                              key={genre.id || genre.name}
+                              variant="primary"
+                              className="text-xs bg-accent/20 text-accent border border-accent/30"
+                            >
+                              {genre.name}
+                            </Badge>
+                          ))}
+                        </div>
+                        <div className="flex items-center mb-4">
+                          <Star className="h-4 w-4 text-accent fill-accent mr-1" />
+                          <span className="text-accent font-bold text-lg">
+                            {movie.avgRating ? movie.avgRating.toFixed(1) : "N/A"}
+                          </span>
+                        </div>
+                        <div className="mt-auto" />
+                      </CardContent>
+                      <CardFooter className="p-4 pt-0">
+                        <Button variant="primary" className="w-full">
+                          Details
+                        </Button>
+                      </CardFooter>
+                    </Card>
                   ))}
                 </div>
-                <div className="flex items-center mb-4">
-                  <Star className="h-4 w-4 text-accent fill-accent mr-1" />
-                  <span className="text-accent font-bold text-lg">
-                    {movie.avgRating ? movie.avgRating.toFixed(1) : "N/A"}
-                  </span>
+              ) : (
+                <div className="text-secondary text-center py-8">
+                  No top rated movies found.
                 </div>
-                <div className="mt-auto" />
-              </CardContent>
-              <CardFooter className="p-4 pt-0">
-                <Button variant="primary" className="w-full">
-                  Details
-                </Button>
-              </CardFooter>
-            </Card>
-          ))}
-        </div>
-      ) : (
-        <div className="text-secondary text-center py-8">
-          No top rated movies found.
-        </div>
-      )}
-    </TabsContent>
-  </Tabs>
-</section>
-
+              )}
+            </TabsContent>
+          </Tabs>
+        </section>
 
         {/* Latest News Section */}
         <section className="container mx-auto px-4 py-8">
@@ -405,25 +354,7 @@ export default function Home() {
         </section>
 
         {/* Footer */}
-        <footer className="border-t border-accent py-8 bg-primary">
-          <div className="container mx-auto px-4">
-            <div className="flex flex-col md:flex-row justify-between items-center">
-              <div className="flex items-center space-x-2 mb-4 md:mb-0">
-                <Film className="h-6 w-6 text-accent" />
-                <h4 className="text-xl font-bold text-secondary">Ethio<span className="text-accent">Flix</span></h4>
-              </div>
-              <div className="flex space-x-6">
-                <Link href="/about" className="text-secondary hover:text-accent transition-colors">About</Link>
-                <Link href="/privacy" className="text-secondary hover:text-accent transition-colors">Privacy</Link>
-                <Link href="/terms" className="text-secondary hover:text-accent transition-colors">Terms</Link>
-                <Link href="/contact" className="text-secondary hover:text-accent transition-colors">Contact</Link>
-              </div>
-            </div>
-            <p className="text-center text-secondary mt-8">
-              © {new Date().getFullYear()} EthioFlix. Celebrating Ethiopian cinema.
-            </p>
-          </div>
-        </footer>
+        <Footer />
       </div>
     </div>
   );

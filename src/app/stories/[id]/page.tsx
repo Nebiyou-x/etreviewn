@@ -1,4 +1,4 @@
-export const runtime = 'nodejs'; // ✅ Fixes the params.id error on Edge
+export const runtime = 'nodejs'; 
 
 import { Button } from "@/components/ui/button";
 import {
@@ -15,6 +15,8 @@ import {
 } from "lucide-react";
 import Link from "next/link";
 import { prisma } from "@/lib/prisma";
+import { Footer } from "@/components/footer";
+import { Navbar } from "@/components/Navbar";
 
 export default async function StoryDetailsPage({ params }: { params: { id: string } }) {
   const story = await prisma.news.findUnique({
@@ -24,6 +26,7 @@ export default async function StoryDetailsPage({ params }: { params: { id: strin
   if (!story) {
     return (
       <div className="min-h-screen bg-primary flex items-center justify-center">
+        
         <div className="text-center">
           <h1 className="text-2xl font-bold mb-4 text-accent">Story not found</h1>
           <Link href="/stories">
@@ -37,6 +40,8 @@ export default async function StoryDetailsPage({ params }: { params: { id: strin
   }
 
   return (
+    <>
+    <Navbar />
     <div className="min-h-screen w-full bg-primary">
       <div className="max-w-5xl mx-auto px-4 py-8 sm:py-12">
         <Link href="/stories">
@@ -117,5 +122,7 @@ export default async function StoryDetailsPage({ params }: { params: { id: strin
         </div>
       </div>
     </div>
+    <Footer/>
+    </>
   );
 }
