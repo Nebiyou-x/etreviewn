@@ -78,7 +78,7 @@ export default function PaginatedReviews({ movieId }: { movieId: string }) {
   return (
     <div>
       <div className="flex justify-between items-center mb-6">
-        <h2 className="text-2xl font-bold text-green-500">Reviews</h2>
+        <h2 className="text-2xl font-bold text-green-500"></h2>
         {/* Removed average rating and stars from the reviews section */}
       </div>
       <ReviewForm movieId={movieId} onReviewSubmitted={handleReviewSubmitted} />

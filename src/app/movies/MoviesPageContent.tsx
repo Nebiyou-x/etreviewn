@@ -8,6 +8,9 @@ import { Badge } from "@/components/ui/badge";
 import MovieCard from "@/components/MovieCard";
 import { authClient } from "@/lib/auth-client";
 import { useSearchParams, useRouter } from "next/navigation";
+import { Navbar } from "@/components/Navbar";
+import { Footer } from "@/components/footer";
+
 
 export default function MoviesPageContent() {
   const [movies, setMovies] = useState<any[]>([]);
@@ -221,6 +224,7 @@ export default function MoviesPageContent() {
           </div>
         </div>
       </div>
+      <Footer />
     </div>
   );
 }
