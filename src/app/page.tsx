@@ -42,10 +42,14 @@ export default function Home() {
     fetch("/api/movies/top-rated-list")
       .then((res) => res.json())
       .then((data) => {
+        console.log('Top rated movies data:', data); // Debug log
         setTopRatedList(data);
         setLoadingTopList(false);
       })
-      .catch(() => setLoadingTopList(false));
+      .catch((error) => {
+        console.error('Error fetching top rated movies:', error); // Debug log
+        setLoadingTopList(false);
+      });
   }, []);
 
   // Add after the top rated list state
@@ -192,6 +196,16 @@ export default function Home() {
 
         {/* Main Content */}
         <section className="container mx-auto px-4 py-8">
+          <div className="flex items-center justify-between mb-6">
+            <h3 className="text-2xl sm:text-3xl font-bold text-secondary flex items-center">
+              <Star className="h-6 w-6 mr-3 text-accent" /> Top Rated Movies
+            </h3>
+            <Link href="/movies">
+              <Button variant="outline" className="text-accent border-accent hover:bg-accent hover:text-secondary">
+                View All Movies
+              </Button>
+            </Link>
+          </div>
           <Tabs defaultValue="top-rated" className="w-full">
             <TabsList className="w-full bg-primary border border-accent rounded-2xl overflow-hidden mb-6 flex">
               <TabsTrigger
@@ -210,7 +224,7 @@ export default function Home() {
               {loadingTopList ? (
                 <div className="text-secondary text-center py-8">Loading...</div>
               ) : topRatedList && topRatedList.length > 0 ? (
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
                   {topRatedList.map((movie: any) => (
                     <Card
                       key={movie.id}
@@ -252,9 +266,11 @@ export default function Home() {
                         <div className="mt-auto" />
                       </CardContent>
                       <CardFooter className="p-4 pt-0">
-                        <Button variant="primary" className="w-full">
-                          Details
-                        </Button>
+                        <Link href={`/movies/${movie.id}`} className="w-full">
+                          <Button variant="primary" className="w-full">
+                            Details
+                          </Button>
+                        </Link>
                       </CardFooter>
                     </Card>
                   ))}

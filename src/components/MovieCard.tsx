@@ -1,10 +1,10 @@
 "use client";
 import React, { useState } from "react";
-import { Film } from "lucide-react";
+import { Film, Edit, Trash2 } from "lucide-react";
 import Link from "next/link";
 import { Badge } from "@/components/ui/badge";
 
-export default function MovieCard({ movie, isAdmin = false, onDelete }: { movie: any, isAdmin?: boolean, onDelete?: (id: string) => void }) {
+export default function MovieCard({ movie, isAdmin = false, onDelete, onUpdate }: { movie: any, isAdmin?: boolean, onDelete?: (id: string) => void, onUpdate?: (updatedMovie: any) => void }) {
   const [imgError, setImgError] = useState(false);
   const [deleting, setDeleting] = useState(false);
   
@@ -78,13 +78,22 @@ export default function MovieCard({ movie, isAdmin = false, onDelete }: { movie:
             )}
           </div>
           {isAdmin && (
-            <button
-              className="mt-auto bg-accent hover:bg-primary text-secondary hover:text-accent font-semibold py-2 px-3 rounded-lg text-xs transition-all duration-200"
-              onClick={handleDelete}
-              disabled={deleting}
-            >
-              {deleting ? "Deleting..." : "Delete"}
-            </button>
+            <div className="mt-auto flex gap-2">
+              <Link href={`/admin/edit-movie/${movie.id}`}>
+                <button className="bg-secondary hover:bg-accent text-primary hover:text-secondary font-semibold py-2 px-3 rounded-lg text-xs transition-all duration-200 flex items-center">
+                  <Edit className="h-3 w-3 mr-1" />
+                  Edit
+                </button>
+              </Link>
+              <button
+                className="bg-accent hover:bg-primary text-secondary hover:text-accent font-semibold py-2 px-3 rounded-lg text-xs transition-all duration-200 flex items-center"
+                onClick={handleDelete}
+                disabled={deleting}
+              >
+                <Trash2 className="h-3 w-3 mr-1" />
+                {deleting ? "Deleting..." : "Delete"}
+              </button>
+            </div>
           )}
         </div>
       </div>

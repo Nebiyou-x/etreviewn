@@ -45,6 +45,10 @@ export default function MoviesPageContent() {
     setMovies((prev) => prev.filter((m) => m.id !== id));
   }
 
+  function handleUpdate(updatedMovie: any) {
+    setMovies((prev) => prev.map((m) => m.id === updatedMovie.id ? updatedMovie : m));
+  }
+
   function handleGenreChange(e: React.ChangeEvent<HTMLSelectElement>) {
     const newGenreId = e.target.value;
     const params = new URLSearchParams(Array.from(searchParams.entries()));
@@ -211,7 +215,7 @@ export default function MoviesPageContent() {
               <div className="col-span-full text-center text-secondary/60 text-lg py-8">No movies found.</div>
             ) : (
               movies.map((movie) => (
-                <MovieCard key={movie.id} movie={movie} isAdmin={isAdmin} onDelete={handleDelete} />
+                <MovieCard key={movie.id} movie={movie} isAdmin={isAdmin} onDelete={handleDelete} onUpdate={handleUpdate} />
               ))
             )}
           </div>

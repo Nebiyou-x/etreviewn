@@ -2,7 +2,7 @@
 import React, { useState } from "react";
 import { Card, CardHeader, CardContent, CardFooter } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { BookOpen, User, CalendarDays, Film, Plus, Trash2, Menu, X } from 'lucide-react';
+import { BookOpen, User, CalendarDays, Film, Plus, Trash2, Menu, X, Edit } from 'lucide-react';
 import Link from "next/link";
 import { Badge } from "@/components/ui/badge";
 
@@ -91,15 +91,26 @@ export default function StoriesPageClient({ initialNews, isAdmin }: { initialNew
                   </Button>
                 </Link>
                 {isAdmin && (
-                  <Button
-                    variant="secondary"
-                    className="flex items-center"
-                    onClick={() => handleDelete(story.id)}
-                    disabled={deletingId === story.id}
-                  >
-                    <Trash2 className="h-4 w-4 mr-1" />
-                    {deletingId === story.id ? "Deleting..." : "Delete"}
-                  </Button>
+                  <div className="flex gap-2">
+                    <Link href={`/admin/edit-news/${story.id}`}>
+                      <Button
+                        variant="secondary"
+                        className="flex items-center"
+                      >
+                        <Edit className="h-4 w-4 mr-1" />
+                        Edit
+                      </Button>
+                    </Link>
+                    <Button
+                      variant="secondary"
+                      className="flex items-center"
+                      onClick={() => handleDelete(story.id)}
+                      disabled={deletingId === story.id}
+                    >
+                      <Trash2 className="h-4 w-4 mr-1" />
+                      {deletingId === story.id ? "Deleting..." : "Delete"}
+                    </Button>
+                  </div>
                 )}
               </CardFooter>
             </Card>

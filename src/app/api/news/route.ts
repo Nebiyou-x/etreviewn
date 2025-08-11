@@ -35,6 +35,41 @@ export async function POST(req: NextRequest) {
   return NextResponse.json(news, { status: 201 });
 }
 
+export async function PUT(req: NextRequest) {
+  const session = await auth.api.getSession({ headers: req.headers });
+  if (!session || session.user?.email?.toLowerCase() !== "admin@gmail.com") {
+    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+  }
+  const { id, title, content, author, imageUrl, tags } = await req.json();
+  if (!id || !title || !content || !author) {
+    return NextResponse.json({ error: "ID, title, content, and author are required" }, { status: 400 });
+  }
+  try {
+    const news = await prisma.news.update({
+      where: { id },
+      data: {
+        title,
+        content,
+        author,
+        imageUrl,
+        tags: Array.isArray(tags) ? tags : [],
+      },
+    });
+    return NextResponse.json(news);
+  } catch (error) {
+    console.error("News update error:", error);
+    let details: string;
+    if (error instanceof Error) {
+      details = error.message;
+    } else if (typeof error === "string") {
+      details = error;
+    } else {
+      details = JSON.stringify(error);
+    }
+    return NextResponse.json({ error: "Failed to update news", details }, { status: 500 });
+  }
+}
+
 export async function DELETE(req: NextRequest) {
   const session = await auth.api.getSession({ headers: req.headers });
   if (!session || session.user?.email?.toLowerCase() !== "admin@gmail.com") {
