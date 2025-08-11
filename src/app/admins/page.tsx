@@ -1,10 +1,10 @@
 import { auth } from "@/lib/auth";
 import { headers } from "next/headers";
-import AddMovieForm from "@/components/AddMovieForm";
+import MovieForm from "@/components/MovieFormed";
 import { NextResponse } from "next/server";
 import { PrismaClient } from "@prisma/client";
 
-export default async function AddMoviePage() {
+export default async function Movieedit() {
   const session = await auth.api.getSession({
     headers: await headers(),
   });
@@ -17,7 +17,7 @@ export default async function AddMoviePage() {
       {(!session || session.user?.email?.toLowerCase() !== "admin@gmail.com") ? (
         <p className="text-destructive">Unauthorized</p>
       ) : (
-        <AddMovieForm />
+        <MovieForm />
       )}
     </div>
   );
