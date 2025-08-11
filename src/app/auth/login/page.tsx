@@ -17,9 +17,10 @@ export default function Page() {
 
       <p className="text-muted-foreground text-sm">
         Don&apos;t have an account?{" "}
-        <Link href="/auth/register" className="hover:text-foreground">
-          Register
-        </Link>
+        <Link href="/auth/register" className="text-green-500 hover:text-foreground">
+  Register
+</Link>
+
       </p>
     </div>
   );   
